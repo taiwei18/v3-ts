@@ -1,7 +1,12 @@
 <template>
   <div class="home-box">
     <div class="home-card">
-
+    </div>
+    <div class="home-card">
+    </div>
+    <div class="home-card">
+    </div>
+    <div class="home-card">
     </div>
   </div>
 </template>
@@ -12,17 +17,14 @@
 
 <style scoped>
 .home-box {
-  width: 100%;
-  height: 100%;
-  background: aqua;
+  display: grid;
+  grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+  gap: 50px;
 }
 
 .home-card {
-  width: 100%;
-  height: 100%;
-  background: beige;
-  border-radius: 10px;
+  height: 200px;
+  background: #fff;
+  border: 1px solid #ccc;
 }
-
-
 </style>

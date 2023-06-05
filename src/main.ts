@@ -6,6 +6,7 @@ import 'ant-design-vue/dist/antd.css';
 import { createPinia } from 'pinia';
 import 'nprogress/nprogress.css';
 import  "@/assets/iconfont/iconfont.css";
+import 'virtual:uno.css'
 
 
 const app = createApp(App)

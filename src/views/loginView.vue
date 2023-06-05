@@ -1,22 +1,14 @@
 <template>
   <div class="login">
     <div class="login-card">
-      <a-form
-          ref="formRef"
-          :model="formState"
-          :rules="rules"
-          autocomplete="off"
-          labelAlign="left"
-          name="basic"
-          @finish="onFinish"
-          @finishFailed="onFinishFailed"
-      >
+      <a-form ref="formRef" :model="formState" :rules="rules" autocomplete="off" labelAlign="left" name="basic"
+        @finish="onFinish" @finishFailed="onFinishFailed">
         <a-form-item label="账号" name="username">
-          <a-input v-model:value="formState.username"/>
+          <a-input v-model:value="formState.username" />
         </a-form-item>
 
         <a-form-item label="密码" name="password">
-          <a-input-password v-model:value="formState.password"/>
+          <a-input-password v-model:value="formState.password" />
         </a-form-item>
 
         <a-form-item name="remember">
@@ -26,17 +18,21 @@
           </div>
         </a-form-item>
         <a-form-item>
-          <a-button block="true" html-type="submit" type="primary">登录</a-button>
+          <a-button :block="true" html-type="submit" type="primary" :loading="login_loading"
+            @click="register">登录</a-button>
         </a-form-item>
       </a-form>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import {reactive, ref} from "vue";
-import type {FormInstance} from 'ant-design-vue';
-import type {Rule} from 'ant-design-vue/es/form';
+import { reactive, ref } from "vue";
+import { useRouter } from "vue-router";
+import type { FormInstance } from 'ant-design-vue';
+import type { Rule } from 'ant-design-vue/es/form';
 
+const login_loading = ref(false)
+const router = useRouter()
 interface FormState {
   username: string;
   password: string;
@@ -72,14 +68,16 @@ const rulesPassword = async (_rule: Rule, value: string) => {
   }
 };
 const rules: Record<string, Rule[]> = {
-  username: [{validator: rulesUsername, trigger: "blur"}],
-  password: [{validator: rulesPassword, trigger: "blur"}]
+  username: [{ validator: rulesUsername, trigger: "blur" }],
+  password: [{ validator: rulesPassword, trigger: "blur" }]
 };
-
+const register = () => {
+  login_loading.value = true
+  setTimeout(() => {
+    login_loading.value = false
+  }, 2000)
+}
 const onFinish = (values: any) => {
-  console.log("Success:", values);
-
-  //
   interface User {
     mytime: Number,
     password: String,
@@ -96,19 +94,10 @@ const onFinish = (values: any) => {
     pasttime: 604800000
   }
   localStorage.setItem("my_user", JSON.stringify(my_user))
-
+  router.push({ path: '/home' })
 };
-// 写一个for循环
-// for(let i=0;i<localStorage.length;i++){
-//   console.log(localStorage.key(i))
-// }
 const onFinishFailed = (errorInfo: any) => {
   console.log("Failed:", errorInfo);
-  // let { proxy } = getCurrentInstance();
-  //   proxy?.$loading.show();
-  //   setTimeout(() => {
-  //     proxy?.$loading.hide();
-  //   }, 5000);
 };
 </script>
 <style scoped>

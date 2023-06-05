@@ -8,9 +8,7 @@ import index from "@/views/indexView.vue";
 NProgress.inc(0.2)
 NProgress.configure({ easing: 'ease', speed: 100, showSpinner: false })
 
-
 const routes: Array<RouteRecordRaw> = [
-
   {
     path: '/',
     name: 'index',
@@ -54,7 +52,7 @@ const routes: Array<RouteRecordRaw> = [
           icon: 'icon-tubiao',
           title: '错误-Watermelon'
         },
-        component: () => import('@/views/errorVIew.vue')
+        component: () => import('@/views/errorView.vue')
       },
 
     ]
@@ -68,34 +66,41 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/loginView.vue'),
   },
 ];
-
 const router = createRouter({
   history: createWebHistory(),
   routes,
 });
 
+//路由守卫
 router.beforeEach((to, _from, next) => {
   document.title = `${to.meta.title} | vue-manage-system`;
-
   NProgress.start();
 
 
-  const my_user = JSON.parse(localStorage.getItem('my_user') || '')
-
-  if (!my_user && to.path !== '/login') {
-    next('/login');
+  const my_user = JSON.parse(localStorage.getItem('my_user') || 'null')
+  //根据my_user判断是否登录,pasttime为过期时间，单位为毫秒，这里设置为7天，mytime为登录时间，单位为毫秒
+  //remember为是否七天免登录，true为是，false为否
+  if (to.path === '/login') {
+    if (my_user) {
+      next({ path: '/' })
+    } else {
+      next()
+    }
   }
   else {
-    if (my_user.remember === true) {
-      const nowtime = new Date().getTime()
-      if (nowtime - my_user.mytime > my_user.pasttime) {
-        localStorage.removeItem('my_user');
-        next('/login');
+    if (my_user) {
+      if (my_user.remember) {
+        if (new Date().getTime() - my_user.mytime > my_user.pasttime) {
+          localStorage.removeItem('my_user')
+          next({ path: '/login' })
+        } else {
+          next()
+        }
       } else {
-        next();
+        next()
       }
     } else {
-      next();
+      next({ path: '/login' })
     }
   }
 });

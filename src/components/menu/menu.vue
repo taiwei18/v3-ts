@@ -1,7 +1,7 @@
 <template>
   <div :class="menuStore.collapse?'menu-min-box':'menu-box'">
     <a-menu :selectedKeys="[$route.path]" v-model:openKeys="state.openKeys" mode="inline" theme="dark"
-      :inline-collapsed="menuStore.collapse">
+            :inline-collapsed="menuStore.collapse">
       <a-menu-item selectable="false">
         <template #icon>
           <i class="iconfont icon-vue-dot-js"></i>
@@ -15,9 +15,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { reactive, watch } from "vue";
-import { useRouter } from 'vue-router';
-import { useMenustore } from "@/store/menu";
+import {reactive, watch} from "vue";
+import {useRouter} from 'vue-router';
+import {useMenustore} from "@/store/menu";
 import sidebar from "./sidebar.vue";
 // 获取全部路由
 let router = useRouter()
@@ -34,13 +34,10 @@ const state = reactive({
 });
 
 watch(
-  () => state.openKeys,
-  (_val, oldVal) => {
-    state.preOpenKeys = oldVal;
-  }
-
-
-
+    () => state.openKeys,
+    (_val, oldVal) => {
+      state.preOpenKeys = oldVal;
+    }
 );
 
 </script>
@@ -48,11 +45,12 @@ watch(
 <style scoped lang="scss">
 .menu-box {
   width: 250px;
-  transition:width .5s ;
+  transition: width .5s;
 }
+
 .menu-min-box {
   width: 80px;
-  transition:width .5s ;
+  transition: width .2s ease-in-out;
 }
 </style>
 
