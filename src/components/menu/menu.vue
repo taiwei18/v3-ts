@@ -1,12 +1,12 @@
 <template>
-  <div :class="menuStore.collapse?'menu-min-box':'menu-box'">
+  <div :class="menuStore.collapse ? 'menu-min-box' : 'menu-box'">
     <a-menu :selectedKeys="[$route.path]" v-model:openKeys="state.openKeys" mode="inline" theme="dark"
-            :inline-collapsed="menuStore.collapse">
+      :inline-collapsed="menuStore.collapse">
       <a-menu-item selectable="false">
         <template #icon>
           <i class="iconfont icon-vue-dot-js"></i>
         </template>
-        <span style="margin-right: 57px;">Watermelon</span>
+        <span>Watermelon</span>
       </a-menu-item>
       <template v-for="(item, index) in menuList" :key="index">
         <sidebar :item="item" :index="index"></sidebar>
@@ -15,16 +15,12 @@
   </div>
 </template>
 <script lang="ts" setup>
-import {reactive, watch} from "vue";
-import {useRouter} from 'vue-router';
-import {useMenustore} from "@/store/menu";
+import { reactive, watch } from "vue";
+import { useRouter } from 'vue-router';
+import { useMenustore } from "@/store/menu";
 import sidebar from "./sidebar.vue";
-// 获取全部路由
 let router = useRouter()
-console.log('router', router.options.routes[0].children)
-
 const menuList = router.options.routes[0].children
-
 const menuStore = useMenustore()
 const state = reactive({
   collapsed: false,
@@ -32,12 +28,11 @@ const state = reactive({
   openKeys: ["sub1"],
   preOpenKeys: ["sub1"]
 });
-
 watch(
-    () => state.openKeys,
-    (_val, oldVal) => {
-      state.preOpenKeys = oldVal;
-    }
+  () => state.openKeys,
+  (_val, oldVal) => {
+    state.preOpenKeys = oldVal;
+  }
 );
 
 </script>

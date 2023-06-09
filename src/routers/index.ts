@@ -54,7 +54,15 @@ const routes: Array<RouteRecordRaw> = [
         },
         component: () => import('@/views/errorView.vue')
       },
-
+      {
+        path: '/problem',
+        name: '疑问',
+        meta:{
+          icon: 'icon-yiwen',
+          title: '疑问-Watermelon'
+        },
+        component: () => import('@/views/problemView.vue')
+      }
     ]
   },
   {

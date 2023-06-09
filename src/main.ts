@@ -7,6 +7,7 @@ import { createPinia } from 'pinia';
 import 'nprogress/nprogress.css';
 import  "@/assets/iconfont/iconfont.css";
 import 'virtual:uno.css'
+import 'animate.css/animate.min.css'
 
 
 const app = createApp(App)

@@ -1,8 +1,8 @@
 <template>
   <div class="box">
-    <vmenu/>
+    <vmenu />
     <div class="box-main">
-      <vheader/>
+      <vheader />
       <main>
         <router-view v-slot="{ Component }">
           <transition :duration="{ enter: 500, leave: 300 }" mode="out-in" name="slide-fade">
@@ -17,12 +17,6 @@
 <script lang="ts" setup>
 import vmenu from "@/components/menu/menu.vue";
 import vheader from "@/components/header/header.vue";
-import {ref} from "vue";
-
-let num = ref<Number | String>(5)
-console.log(num.value);
-const arr: Array<String>[] = []
-console.log(arr);
 
 </script>
 
@@ -38,7 +32,7 @@ console.log(arr);
 
 main {
   width: 100%;
-  height: calc(100vh - 80px);
+  height: calc(100% - 70px);
   padding: 20px;
   background: #f0f2f5;
   border: 1px solid #ccc;

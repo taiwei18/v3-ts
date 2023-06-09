@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 4088594 */
-  src: url('//at.alicdn.com/t/c/font_4088594_ox5ywqgdeed.woff2?t=1685349192166') format('woff2'),
-       url('//at.alicdn.com/t/c/font_4088594_ox5ywqgdeed.woff?t=1685349192166') format('woff'),
-       url('//at.alicdn.com/t/c/font_4088594_ox5ywqgdeed.ttf?t=1685349192166') format('truetype');
+  src: url('//at.alicdn.com/t/c/font_4088594_da1dshl1k5a.woff2?t=1686211991378') format('woff2'),
+       url('//at.alicdn.com/t/c/font_4088594_da1dshl1k5a.woff?t=1686211991378') format('woff'),
+       url('//at.alicdn.com/t/c/font_4088594_da1dshl1k5a.ttf?t=1686211991378') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,26 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-touxiang:before {
+  content: "\e626";
+}
+
+.icon-yiwen:before {
+  content: "\e636";
+}
+
+.icon-icon--jinggao:before {
+  content: "\e620";
+}
+
+.icon-71shibai:before {
+  content: "\e64a";
+}
+
+.icon-chenggong:before {
+  content: "\e742";
 }
 
 .icon-vue-dot-js:before {
