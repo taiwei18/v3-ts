@@ -32,7 +32,7 @@ import vheader from "@/components/header/header.vue";
 
 main {
   width: 100%;
-  height: calc(100% - 70px);
+  height: calc(100% - 100px);
   padding: 20px;
   background: #f0f2f5;
   border: 1px solid #ccc;

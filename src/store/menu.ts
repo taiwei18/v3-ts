@@ -34,8 +34,6 @@ export const useMenustore = defineStore('menuStore', {
             this.tages.forEach((item, index) => {
                 if (item.path === data.path) {
                    this.tages.splice(index, 1);
-                   data.$router.push(this.tages[index - 1].path);
-                    console.log(this.tages.splice(index, 1));
                 }
             }
             )

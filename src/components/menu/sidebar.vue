@@ -46,7 +46,7 @@ const props = defineProps({
 })
 const item = ref(JSON.parse(JSON.stringify(props.item)))
 menuStore.setTagsItem(router.currentRoute.value)
-const setTags = (e:any) => {
+const setTags = (e: any) => {
   menuStore.setTagsItem(e)
 }
 </script>

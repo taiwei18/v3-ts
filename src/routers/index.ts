@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
         name: '首页',
         meta: {
           icon: 'icon-icon-home',
-          title: '首页-Watermelon'
+          title: '首页'
         },
         component: () => import('@/views/homeView.vue'),
       },
@@ -32,7 +32,7 @@ const routes: Array<RouteRecordRaw> = [
         name: '表格',
         meta: {
           icon: 'icon-four-squares',
-          title: '表格-Watermelon'
+          title: '表格'
         },
         component: () => import('@/views/tableView.vue'),
       },
@@ -41,7 +41,7 @@ const routes: Array<RouteRecordRaw> = [
         name: '图表',
         meta: {
           icon: 'icon-tubiao',
-          title: '图表-Watermelon'
+          title: '图表'
         },
         component: () => import('@/views/chartsView.vue'),
       },
@@ -50,16 +50,16 @@ const routes: Array<RouteRecordRaw> = [
         name: '错误页面',
         meta: {
           icon: 'icon-tubiao',
-          title: '错误-Watermelon'
+          title: '错误'
         },
         component: () => import('@/views/errorView.vue')
       },
       {
         path: '/problem',
         name: '疑问',
-        meta:{
+        meta: {
           icon: 'icon-yiwen',
-          title: '疑问-Watermelon'
+          title: '疑问'
         },
         component: () => import('@/views/problemView.vue')
       }
@@ -69,7 +69,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/login',
     name: '登录',
     meta: {
-      title: '登录-Watermelon'
+      title: '登录'
     },
     component: () => import('@/views/loginView.vue'),
   },
@@ -81,12 +81,10 @@ const router = createRouter({
 
 //路由守卫
 router.beforeEach((to, _from, next) => {
-  document.title = `${to.meta.title} | vue-manage-system`;
+  document.title = `${to.meta.title} - Watermelon`;
   NProgress.start();
-
-
   const my_user = JSON.parse(localStorage.getItem('my_user') || 'null')
-  //根据my_user判断是否登录,pasttime为过期时间，单位为毫秒，这里设置为7天，mytime为登录时间，单位为毫秒
+  //根据my_user判断是否登录,pasttime为过期时间，单位为毫秒，这里设置为7天，mytime为登录时间
   //remember为是否七天免登录，true为是，false为否
   if (to.path === '/login') {
     if (my_user) {
@@ -98,6 +96,7 @@ router.beforeEach((to, _from, next) => {
   else {
     if (my_user) {
       if (my_user.remember) {
+        console.log(my_user.mytime, my_user.pasttime, new Date().getTime());
         if (new Date().getTime() - my_user.mytime > my_user.pasttime) {
           localStorage.removeItem('my_user')
           next({ path: '/login' })
@@ -107,6 +106,7 @@ router.beforeEach((to, _from, next) => {
       } else {
         next()
       }
+      
     } else {
       next({ path: '/login' })
     }

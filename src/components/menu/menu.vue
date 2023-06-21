@@ -15,13 +15,13 @@
   </div>
 </template>
 <script lang="ts" setup>
+import sidebar from "./sidebar.vue";
 import { reactive, watch } from "vue";
 import { useRouter } from 'vue-router';
 import { useMenustore } from "@/store/menu";
-import sidebar from "./sidebar.vue";
-let router = useRouter()
-const menuList = router.options.routes[0].children
+const router = useRouter()
 const menuStore = useMenustore()
+const menuList = router.options.routes[0].children
 const state = reactive({
   collapsed: false,
   selectedKeys: ["1"],
@@ -34,7 +34,6 @@ watch(
     state.preOpenKeys = oldVal;
   }
 );
-
 </script>
 
 <style scoped lang="scss">

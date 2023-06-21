@@ -35,7 +35,7 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "src/main.ts"
-  ],
+, "src/utils/vintage.js"  ],
   "ts-node": { "esm": true },
   "references": [
     {

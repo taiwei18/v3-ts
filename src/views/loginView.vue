@@ -1,120 +1,108 @@
 <template>
   <div class="login">
+    <img class="login-img  hidden md:block" src="@/assets/image/Loginbg.png" alt="">
     <div class="login-card">
-      <a-form ref="formRef" :model="formState" :rules="rules" autocomplete="off" labelAlign="left" name="basic"
-        @finish="onFinish" @finishFailed="onFinishFailed">
-        <a-form-item label="账号" name="username">
-          <a-input v-model:value="formState.username" />
-        </a-form-item>
-
-        <a-form-item label="密码" name="password">
-          <a-input-password v-model:value="formState.password" />
-        </a-form-item>
-
-        <a-form-item name="remember">
-          <div style="display:flex;justify-content: space-between;">
-            <a-checkbox v-model:checked="formState.remember">7天内免登录</a-checkbox>
-            <a class="login-form-forgot">忘记密码</a>
-          </div>
-        </a-form-item>
-        <a-form-item>
-          <a-button :block="true" html-type="submit" type="primary" :loading="login_loading"
-            @click="register">登录</a-button>
-        </a-form-item>
-      </a-form>
+      <div class="login-card-form">
+        <h2 class="text-center mb-15">Register or login Watermelon</h2>
+        <a-form ref="formRef" :model="formState" :rules="rules" autocomplete="off" labelAlign="left" name="basic"
+          @finish="onFinish" @finishFailed="onFinishFailed">
+          <a-form-item label="账号" name="username">
+            <a-input v-model:value="formState.username" />
+          </a-form-item>
+          <a-form-item label="密码" name="password">
+            <a-input-password v-model:value="formState.password" />
+          </a-form-item>
+          <a-form-item name="remember">
+            <div class="flex justify-between">
+              <a-checkbox v-model:checked="formState.remember">7天内免登录</a-checkbox>
+              <a class="login-form-forgot">忘记密码</a>
+            </div>
+          </a-form-item>
+          <a-form-item>
+            <a-button :block="true" html-type="submit" type="primary">Register or login</a-button>
+          </a-form-item>
+        </a-form>
+      </div>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
+import { rulesUsername, rulesPassword } from "@/utils/rules";
 import type { FormInstance } from 'ant-design-vue';
 import type { Rule } from 'ant-design-vue/es/form';
 
-const login_loading = ref(false)
-const router = useRouter()
 interface FormState {
   username: string;
   password: string;
   remember: boolean;
 }
+interface User {
+  mytime: Number,
+  password: String,
+  pasttime: Number,
+  remember: Boolean,
+  username: String
+}
 
+const router = useRouter()
 const formRef = ref<FormInstance>();
 const formState = reactive<FormState>({
   username: "",
   password: "",
   remember: true
 });
-const rulesUsername = async (_rule: Rule, value: string) => {
-  if ((value === "")) {
-    return Promise.reject('账号不能为空');
-  } else {
-    const reg = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/
-    if (!reg.test(value)) {
-      return Promise.reject('字母开头，6~18字节，仅允许字母、数字和下划线');
-    }
-    return Promise.resolve();
-  }
-};
-const rulesPassword = async (_rule: Rule, value: string) => {
-  if ((value === "")) {
-    return Promise.reject('密码不能为空');
-  } else {
-    const reg = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/
-    if (!reg.test(value)) {
-      return Promise.reject('字母开头，6~18字节，仅允许字母、数字和下划线');
-    }
-    return Promise.resolve();
-  }
-};
 const rules: Record<string, Rule[]> = {
   username: [{ validator: rulesUsername, trigger: "blur" }],
   password: [{ validator: rulesPassword, trigger: "blur" }]
 };
-const register = () => {
-  login_loading.value = true
-  setTimeout(() => {
-    login_loading.value = false
-  }, 2000)
-}
-const onFinish = (values: any) => {
-  interface User {
-    mytime: Number,
-    password: String,
-    pasttime: Number,
-    remember: Boolean,
-    username: String
-  }
-
+const onFinish = (values: User) => {
   const my_user: User = {
     username: values.password,
     password: values.password,
     remember: values.remember,
     mytime: new Date().getTime(),
-    pasttime: 604800000
+    pasttime: 10080000 * 60
   }
   localStorage.setItem("my_user", JSON.stringify(my_user))
   router.push({ path: '/home' })
 };
-const onFinishFailed = (errorInfo: any) => {
+const onFinishFailed = (errorInfo: string) => {
   console.log("Failed:", errorInfo);
 };
+history.pushState(null, null as any, document.URL);
+window.addEventListener('popstate', function () {
+  history.pushState(null, null as any, document.URL);
+});
+
 </script>
-<style scoped>
+<style scoped lang="scss">
 .login {
-  position: relative;
   width: 100vw;
   height: 100vh;
-  background-image: url(@/assets/image/Loginbg.png);
+  display: flex;
+}
+
+.login-img {
+  width: 50vw;
+  height: 100vh;
 }
 
 .login-card {
-  width: 500px;
+  width: 100vw;
+  height: 100vh;
   padding: 20px;
-  background: #f4f4f4;
-  border-radius: 10px;
-  position: absolute;
-  left: 60%;
-  top: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &-form {
+    width: 500px;
+    border: 1px solid #d6ecf0;
+    padding: 20px;
+    box-shadow:
+      0 3px 2px 0px rgba(0, 0, 0, 0.1), 0 0px 4px 0 rgba(0, 0, 0, 0.1), 0 0px 16px 3px rgba(0, 0, 0, 0.0)
+  }
 }
 </style>
