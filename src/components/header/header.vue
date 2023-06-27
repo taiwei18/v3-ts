@@ -17,7 +17,7 @@
         </template>
         <a-avatar shape="square" :size="50" class="cursor-pointer avatar"
           :style="{ backgroundColor: color, verticalAlign: 'middle' }">
-          噫呼吁
+          嵇康
         </a-avatar>
       </a-popover>
     </div>
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { nextTick, ref } from "vue";
 import tags from "./tags.vue";
 import breadcrumb from "./breadcrumb.vue";
 import { useMenustore } from "@/store/menu";
@@ -34,6 +34,9 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
 } from "@ant-design/icons-vue";
+import { useChartstore } from "@/store/charts";
+
+const charts = useChartstore()
 const menuStore = useMenustore()
 const colorList = ['#88aea3', '#4f5355', '#2b5e7d', '#b0a4e3', '#1bd1a5'];
 const random = Math.floor(Math.random() * 5);
@@ -42,6 +45,14 @@ const Media = window.matchMedia("(max-width: 420px)").matches;
 Media ? menuStore.handleCollapse() : '';
 const toggleCollapsed = () => {
   menuStore.handleCollapse()
+  nextTick(() => {
+    const targetNode = document.querySelector('.box-main');
+    const jsonChart = JSON.parse(JSON.stringify(charts.chart))
+    const resizeObserver = new ResizeObserver(() => {
+      jsonChart.resize();
+    });
+    resizeObserver.observe(targetNode as Element);
+  });
 };
 const handQuit = () => {
   localStorage.removeItem("my_user");

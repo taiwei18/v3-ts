@@ -11,6 +11,7 @@ interface ListItem {
 export const useMenustore = defineStore('menuStore', {
     state: () => {
         return {
+            //控制
             collapse: false,
             tages: <ListItem[]>[]
         }
@@ -33,7 +34,7 @@ export const useMenustore = defineStore('menuStore', {
             //根据传进来的值删除
             this.tages.forEach((item, index) => {
                 if (item.path === data.path) {
-                   this.tages.splice(index, 1);
+                    this.tages.splice(index, 1);
                 }
             }
             )

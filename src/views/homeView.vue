@@ -253,6 +253,7 @@ setInterval(() => {
     item.data = makeRandomData()
   })
 }, 2000)
+
 </script>
 
 <style scoped>
